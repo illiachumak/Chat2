@@ -18,10 +18,10 @@ function App() {
     <NavBar/>
       <Container>
         <Routes>
-          <Route path='/' element={user ?<ChatPage/> : <Navigate to='/login' />} />
-          <Route path='/register' element={<RegisterPage/>} />
-          <Route path='/login' element={user ?<ChatPage/> : <LoginPage/>} />
-          <Route path='*' element={<Navigate to='/'/>} />
+          <Route path='/Chat2' element={user ?<ChatPage/> : <Navigate to='/Chat2/login' />} />
+          <Route path='/Chat2/register' element={<RegisterPage/>} />
+          <Route path='/Chat2/login' element={user ?<ChatPage/> : <LoginPage/>} />
+          <Route path='*' element={<Navigate to='/Chat2/'/>} />
         </Routes>
       </Container>
     </>
