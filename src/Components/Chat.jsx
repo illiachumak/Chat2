@@ -12,6 +12,7 @@ const Chat = () => {
     const dispatch = useDispatch()
     const { currentChat, chatMessages } = useSelector(state => state.chat)
     const user = JSON.parse(localStorage.getItem('user'))
+
     const recipientUser = useFetchRecipientUser(currentChat)
     const [inputText, setInputText] = useState('')
     const onClickSendMessage = () => {
