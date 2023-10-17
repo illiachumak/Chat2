@@ -1,5 +1,6 @@
 import io from 'socket.io-client'
+import { base_url } from './assets/utils';
 
-const socket = io.connect('http://localhost:5000')
+const socket = io.connect(`${base_url}`)
 
 export default socket;
