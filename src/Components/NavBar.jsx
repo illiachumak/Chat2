@@ -11,12 +11,12 @@ const NavBar = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = localStorage.getItem('user')
-    const logoLink = user ? '/' : '/login'
+    const logoLink = user ? '/' : '/Chat2/login'
     
     const logoutUser = () => {
         localStorage.removeItem('user')
         dispatch(setNeedUpdate())
-        navigate('/login')
+        navigate('/Chat2/login')
     }
 
     const switchProfile = () => {
@@ -34,10 +34,10 @@ const NavBar = () => {
             
             <Nav>
                 <Stack direction='horizontal' gap={3}>
-                    {user && (<><Link onClick={switchProfile}>Profile</Link>
-                    <Link to='/login' className='link-light' onClick={logoutUser}>Log out</Link></>
+                    {user && (<><Link onClick={switchProfile} className='link-light'>Profile</Link>
+                    <Link to='/Chat2/login' className='link-light' onClick={logoutUser}>Log out</Link></>
                     )}
-                    {!user && <Link to='/login' className='link-light'>Login</Link>}
+                    {!user && <Link to='/Chat2/login' className='link-light'>Login</Link>}
                     
                 </Stack>
                 

@@ -1,0 +1,1 @@
+export const base_url = "https:/chat2-lb5h60jpc-illias-projects-f94a16e0.vercel.app"

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import useFetchRecipientUser from "../hooks/fetchRecipientUser";
 import moment from 'moment';
 import InputEmoji from 'react-input-emoji' 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { sendMessage } from "../redux/slices/chatSlice";
 import socket from "../ws";
 
@@ -23,6 +23,18 @@ const Chat = () => {
       })
     }
 
+    useEffect(()=>{
+      socket.on("message", () => {
+        
+      })
+
+      
+
+      return () => {
+        socket.off("message")
+      }
+    },[])
+
     return ( 
         <Stack gap={4} className="chat-box">
           <div className="chat-header">
@@ -38,6 +50,7 @@ const Chat = () => {
                 'message align-self-start flex-grow-0'
               }`}
               >
+                
                 <span>{message.text}</span>
                 <span className="message-footer">
                   {moment(message.createdAt).calendar()}

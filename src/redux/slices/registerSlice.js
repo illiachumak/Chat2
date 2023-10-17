@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import { base_url } from '../../assets/utils'
 
 const initialState = {
   isLoading: false,
@@ -11,7 +12,7 @@ export const registerUser = createAsyncThunk(
   'register/registerUser',
   async (userForm, thunkAPI) => {
     try {
-      const {data} = await axios.post('http://localhost:5000/api/users/register', userForm)
+      const {data} = await axios.post(`${base_url}/api/users/register`, userForm)
       return data
     } catch (error) {
       return thunkAPI.rejectWithValue('Email is in use!')

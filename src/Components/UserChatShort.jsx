@@ -3,6 +3,7 @@ import useFetchRecipientUser from "../hooks/fetchRecipientUser";
 import { createChat, getChat } from "../redux/slices/chatSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import userIcon from "../../public/user-icon.svg"
 
 const UserChatShort = ({ user, chat }) => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const UserChatShort = ({ user, chat }) => {
             onClick={handleClickChat}
         >
             <div className="d-flex">
-                <div className="me-2">A</div>
+                <img src={userIcon} alt="A" className="me-2"/>
                 <div className="text-content">
                             <div className="name">{recipientUser?.name}</div>
                             <div className="text">message</div>   
