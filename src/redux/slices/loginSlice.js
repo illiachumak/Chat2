@@ -12,7 +12,7 @@ export const loginUser = createAsyncThunk(
   'login/loginUser',
   async (userForm, thunkAPI) => {
     try{
-      const {data} = await axios.post(`${base_url}/api/users/login`, userForm)
+      const {data} = await axios.post(`https:/chat2-lb5h60jpc-illias-projects-f94a16e0.vercel.app/api/users/login`, userForm)
       return data
     } catch (error) {
       return thunkAPI.rejectWithValue('Email or password is incorrect!')
