@@ -8,7 +8,7 @@ const UserChatShort = ({ user, chat }) => {
     const dispatch = useDispatch();
     const userMe = JSON.parse(localStorage.getItem('user'));
     const recipientUser = useFetchRecipientUser(chat, user);
-
+    
     
     const users = [userMe?._id, recipientUser?._id]
 
@@ -32,7 +32,7 @@ const UserChatShort = ({ user, chat }) => {
             <div className="d-flex flex-column align-items-end">
                 <div className="date">date</div>
                 <div className="this-user-notifications">2</div>
-                <span className="user-online"></span>
+                {recipientUser?.online &&<span className="user-online"></span>}
             </div>
         </Stack>
     );

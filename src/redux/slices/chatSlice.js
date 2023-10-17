@@ -6,6 +6,8 @@ const initialState = {
   userChats: [],
   potentialChats: [],
   currentChat: null,
+  chatMessages: [],
+  notifications: [],
 }
 
 
@@ -31,7 +33,7 @@ export const loadingChats = createAsyncThunk(
 })
 
 export const createChat = createAsyncThunk(
-  'create/createChat',
+  'post/createChat',
   async (users, thunkAPI) => {
     try{
       console.log(users)
@@ -48,21 +50,46 @@ export const getChat = createAsyncThunk(
   'get/getChat',
   async (users, thunkAPI) => {
     try{
-      console.log(users)
-      const { data } = await axios.get(`http://localhost:5000/api/chat/find/${users[0]}/${users[1]}`);
+      const { data: chat } = await axios.get(`http://localhost:5000/api/chat/find/${users[0]}/${users[1]}`);
+      const { data: messages } = await axios.get(`http://localhost:5000/api/messages/${chat._id}`)
 
-
-      return data
+      return {chat, messages}
     } catch (error) {
       return thunkAPI.rejectWithValue('Something went wrong', error)
     }
   
 })
 
-export const chatsSlice = createSlice({
+export const sendMessage = createAsyncThunk(
+  'post/sendMessage',
+  async (props, thunkAPI) => {
+    try{
+      const message = await axios.post(`http://localhost:5000/api/messages/`, {
+        chatId: props.currentChatId,
+        senderId: props.userId,
+        text: props.inputText,
+      })
+      return message.data;
+s
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Something went wrong', error)
+    }
+  
+})
+
+
+const chatsSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
+    setMessage: (state, action) => {
+      if(action.payload.chatId === state.currentChat){
+        state.chatMessages.push(action.payload)
+      } else {
+        state.notifications = [...state.notifications, action.payload]
+      }
+      
+    }
   },
   
   extraReducers: {
@@ -80,20 +107,25 @@ export const chatsSlice = createSlice({
       state.isLoading = false;
     },
     [createChat.fulfilled] : (state, action) => {
+      state.userChats.push(action.payload.chat)
       state.currentChat = action.payload.chat
       state.potentialChats = state.potentialChats.filter(user => {
         return action.payload.chat.members[1] !== user._id;
       });
     },
     [getChat.fulfilled] : (state, action) => {
-      state.currentChat = action.payload
-      console.log(action.payload)
+      state.currentChat = action.payload.chat
+      state.chatMessages = action.payload.messages
     },
+    [sendMessage.fulfilled] : (state, action) => {
+      state.chatMessages = [...state.chatMessages, action.payload]
+    },
+
     
 
     
   }
 })
-export const {} = chatsSlice
+export const {setMessage} = chatsSlice.actions
 
 export default chatsSlice.reducer

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useFetchRecipientUser = (chat, user) => {
+const useFetchRecipientUser = (chat) => {
    const [recipient, setRecipient] = useState(null);
 
-   // Safely retrieve the recipientId
+   const user = JSON.parse(localStorage.getItem('user'))
    const recipientId = chat && chat.members && chat?.members.find(id => id !== user._id);
    useEffect(() => {
        const fetchRecipient = async () => {

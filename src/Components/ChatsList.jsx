@@ -15,36 +15,34 @@ const ChatsList = () => {
         const user = JSON.parse(localStorage.getItem('user'))
         setUserMe(user)
         const userId = user._id
-        if(user){
-        dispatch(loadingChats(userId))
+        if (user) {
+            setUserMe(user)
+            dispatch(loadingChats(user._id))
         }
     
       }, [])
 
     return ( 
         <>
-            {userChats?.length < 1 ? null : (
-                <Stack gap={3} className="messages-box flex-grow-0 pe-3">
-                {isLoading && <p>Loading...</p>}
-                {Array.isArray(userChats) && userChats.length > 0 && userChats.map((chat, index) => {
-                    return(
-                        <div key={index}>
-                            <UserChatShort chat={chat} user={userMe}/>
-                        </div>
-                    );
-                })}
-                {Array.isArray(potentialChats) && potentialChats.length > 0 && potentialChats.map((user, index) => {
-                    return(
-                        <div key={index}>
-                            <UserPotentialChatShort user={user}/>
-                        </div>
-                    );
-                })}
-                </Stack>
+            <Stack gap={3} className="messages-box flex-grow-0 pe-3">
+                {userChats?.length === 0 && potentialChats.length === 0 ? null : (
+                    <>
+                        {isLoading && <p>Loading...</p>}
+                        {Array.isArray(userChats) && userChats.length > 0 && userChats.map((chat, index) => (
+                            <div key={index}>
+                                <UserChatShort chat={chat} user={userMe}/>
+                            </div>
+                        ))}
+                        {Array.isArray(potentialChats) && potentialChats.length > 0 && potentialChats.map((user, index) => (
+                            <div key={index}>
+                                <UserPotentialChatShort user={user}/>
+                            </div>
+                        ))}
+                    </>
                 )}
+            </Stack>
         </>
-    
-    
+
     )
 }
  
